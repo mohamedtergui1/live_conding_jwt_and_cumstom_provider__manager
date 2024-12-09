@@ -2,7 +2,7 @@ package ma.tr.livr_coding.security;
 
 import lombok.RequiredArgsConstructor;
 import ma.tr.livr_coding.repository.UserRepository;
-import ma.tr.livr_coding.service.jwt.JwtService;
+import ma.tr.livr_coding.service.jwt.JwtServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,7 +26,7 @@ import java.util.List;
 public class SecurityConfigBeans {
 
     private final UserRepository userRepository;
-    private final JwtService jwtService;
+    private final JwtServiceImpl jwtService;
 
     @Bean
     public UserDetailsService userDetailsService() {

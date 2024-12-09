@@ -16,23 +16,23 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Service
-public class JwtServiceImpl implements JwtService {
+public class JwtServiceImpl   {
 
     @Value("${security.jwt.secret-key}")
     private String secretKey;
 
-    @Value("${security.jwt.access-token-expiration:70000}")
+    @Value("${security.jwt.access-token-expiration:30000}")
     private Long accessTokenExpiration;
 
     @Value("${security.jwt.refresh-token-expiration:70000000}")
     private Long refreshTokenExpiration;
 
-    @Override
+
     public String extractEmail(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
-    @Override
+
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
@@ -48,22 +48,22 @@ public class JwtServiceImpl implements JwtService {
 
     }
 
-    @Override
+
     public String generateToken(UserDetails userDetails) {
         return generateToken(new HashMap<>(), userDetails);
     }
 
-    @Override
+
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
         return buildToken(extraClaims, userDetails, accessTokenExpiration, "ACCESS");
     }
 
-    @Override
+
     public String generateTokenRefresh(UserDetails userDetails) {
         return generateTokenRefresh(new HashMap<>(), userDetails);
     }
 
-    @Override
+
     public String generateTokenRefresh(Map<String, Object> extraClaims, UserDetails userDetails) {
         return buildToken(extraClaims, userDetails, refreshTokenExpiration, "REFRESH");
     }
@@ -91,12 +91,12 @@ public class JwtServiceImpl implements JwtService {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    @Override
+
     public long getExpirationTime() {
         return accessTokenExpiration;
     }
 
-    @Override
+
     public boolean isTokenValid(String token, UserDetails userDetails) {
         try {
             final String username = extractEmail(token);

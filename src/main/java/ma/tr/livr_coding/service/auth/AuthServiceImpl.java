@@ -5,13 +5,12 @@ import ma.tr.livr_coding.dto.*;
 import ma.tr.livr_coding.entity.User;
 import ma.tr.livr_coding.mapper.AuthMapper;
 import ma.tr.livr_coding.repository.UserRepository;
-import ma.tr.livr_coding.service.jwt.JwtService;
+import ma.tr.livr_coding.service.jwt.JwtServiceImpl;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @RequiredArgsConstructor
 @Service
@@ -21,7 +20,7 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final AuthMapper authMapper;
-    private final JwtService jwtService;
+    private final JwtServiceImpl jwtService;
 
 
     @Override

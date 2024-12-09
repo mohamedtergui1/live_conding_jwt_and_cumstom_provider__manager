@@ -1,7 +1,6 @@
 package ma.tr.livr_coding.security;
 
-import lombok.RequiredArgsConstructor;
-import ma.tr.livr_coding.service.jwt.JwtService;
+import ma.tr.livr_coding.service.jwt.JwtServiceImpl;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -11,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 
-public record JwtAuthProvider(JwtService jwtService,
+public record JwtAuthProvider(JwtServiceImpl jwtService,
                               UserDetailsService userDetailsService) implements AuthenticationProvider {
 
     @Override
