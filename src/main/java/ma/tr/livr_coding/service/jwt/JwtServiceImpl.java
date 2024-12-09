@@ -1,6 +1,7 @@
 package ma.tr.livr_coding.service.jwt;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -20,11 +21,11 @@ public class JwtServiceImpl implements JwtService {
     @Value("${security.jwt.secret-key}")
     private String secretKey;
 
+    @Value("${security.jwt.access-token-expiration:70000}")
+    private Long accessTokenExpiration;
 
-    private Long accessTokenExpiration = 7000l;
-
-
-    private Long refreshTokenExpiration = 70000000L;
+    @Value("${security.jwt.refresh-token-expiration:70000000}")
+    private Long refreshTokenExpiration;
 
     @Override
     public String extractEmail(String token) {
@@ -38,11 +39,13 @@ public class JwtServiceImpl implements JwtService {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(getSignInKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+
+            return Jwts.parserBuilder()
+                    .setSigningKey(getSignInKey())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+
     }
 
     @Override
@@ -95,20 +98,43 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public boolean isTokenValid(String token, UserDetails userDetails) {
-        final String username = extractEmail(token);
-        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
+        try {
+            final String username = extractEmail(token);
+            return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     private boolean isTokenExpired(String token) {
-        return extractExpiration(token).before(new Date());
+        try {
+            return extractExpiration(token).before(new Date());
+        } catch (ExpiredJwtException e) {
+            return true;
+        }
     }
 
     private Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
 
-
     public String extractTokenType(String token) {
-        return extractClaim(token, claims -> claims.get("token_type", String.class));
+        try {
+            return extractClaim(token, claims -> claims.get("token_type", String.class));
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    // Additional method to check if a token is a refresh token
+    public boolean isRefreshToken(String token) {
+        String tokenType = extractTokenType(token);
+        return "REFRESH".equals(tokenType);
+    }
+
+    // Additional method to check if a token is an access token
+    public boolean isAccessToken(String token) {
+        String tokenType = extractTokenType(token);
+        return "ACCESS".equals(tokenType);
     }
 }

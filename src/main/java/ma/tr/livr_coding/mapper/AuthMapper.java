@@ -1,6 +1,6 @@
 package ma.tr.livr_coding.mapper;
 
-import ma.tr.livr_coding.domain.entity.User;
+import ma.tr.livr_coding.entity.User;
 import ma.tr.livr_coding.dto.RegisterRequest;
 import org.mapstruct.Mapper;
 

@@ -24,4 +24,8 @@ public interface JwtService {
 
     String generateTokenRefresh(Map<String, Object> extraClaims, UserDetails userDetails);
 
+    public boolean isRefreshToken(String token);
+
+    public boolean isAccessToken(String token);
+
 }

@@ -17,6 +17,10 @@ public record JwtAuthProvider(JwtService jwtService,
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String token = (String) authentication.getCredentials();
+        if(!jwtService.isAccessToken(token)){
+            throw new BadCredentialsException("Bad credentials");
+        }
+
         String email = jwtService.extractEmail(token);
         if (email == null) {
             throw new BadCredentialsException("Invalid token");

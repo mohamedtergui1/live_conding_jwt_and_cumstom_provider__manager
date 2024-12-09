@@ -1,7 +1,7 @@
 package ma.tr.livr_coding.api;
 
 import lombok.RequiredArgsConstructor;
-import ma.tr.livr_coding.domain.entity.User;
+import ma.tr.livr_coding.entity.User;
 import ma.tr.livr_coding.repository.UserRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

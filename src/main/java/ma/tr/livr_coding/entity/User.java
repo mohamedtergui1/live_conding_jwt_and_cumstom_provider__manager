@@ -1,4 +1,4 @@
-package ma.tr.livr_coding.domain.entity;
+package ma.tr.livr_coding.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

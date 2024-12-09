@@ -1,6 +1,6 @@
 package ma.tr.livr_coding.dto;
 
-import ma.tr.livr_coding.domain.entity.User;
+import ma.tr.livr_coding.entity.User;
 
 public record LoginResponse(
         User authUser

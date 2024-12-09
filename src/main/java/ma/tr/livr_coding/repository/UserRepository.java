@@ -1,6 +1,6 @@
 package ma.tr.livr_coding.repository;
 
-import ma.tr.livr_coding.domain.entity.User;
+import ma.tr.livr_coding.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.rmi.server.UID;
