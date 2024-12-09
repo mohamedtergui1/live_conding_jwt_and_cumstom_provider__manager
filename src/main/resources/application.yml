@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: livecoding
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/${DB_NAME}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  jpa:
+    hibernate:
+      show_sql: true
+      format_sql: true
+      generate_statistics: true
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+        hibernate:
+          log_sql: true
+          jdbc_time_zone: UTC
+
+
+
+liquibase:
+  change-log: classpath:db/changelog/db.changelog-master.yaml
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+
+security:
+  jwt:
+    secret-key: ${SECRET_KEY}
+    expiration-time: ${EXP_TIME}
